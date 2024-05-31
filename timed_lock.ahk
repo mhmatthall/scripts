@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.0
 
 ; Set tray icon
-TraySetIcon("timer.ico")
+TraySetIcon("./icons/timer.ico")
 
 ; Prevent auto-exit to allow OnExit callback
 Persistent

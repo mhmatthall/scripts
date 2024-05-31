@@ -1,7 +1,7 @@
 ﻿#Requires AutoHotkey v2.0
 
 ; Tomato-ise the tray icon
-TraySetIcon("tomato.ico")
+TraySetIcon("./icons/tomato.ico")
 
 ; -----------------------------------------------------------------------------
 ; Main
