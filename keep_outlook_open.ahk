@@ -1,4 +1,4 @@
-#Requires AutoHotkey v2.0
+﻿#Requires AutoHotkey v2.0
 
 ; Set tray icon
 TraySetIcon("./icons/mailcheck.ico")
@@ -6,12 +6,35 @@ TraySetIcon("./icons/mailcheck.ico")
 ; Set tray icon tooltip
 A_IconTip := "Keeping Outlook running..."
 
-; Every minute, check if New Outlook is running. If not, restart it.
+; -----------------------------------------------------------------------------
+; Main
+
+; Location of the (new) Outlook executable
+outlookPath := EnvGet("LOCALAPPDATA") "\Microsoft\WindowsApps\olk.exe"
+
+; Guard: executable can't be found (e.g. Outlook not installed)
+if !FileExist(outlookPath)
+{
+  errorMessage := 
+  (
+    "No Outlook executable found in:
+    " outlookPath "
+    
+    Check that (new) Outlook is installed, then try again."
+  )
+
+  MsgBox errorMessage, "Error", "Iconx"
+  
+  Exit
+}
+
+; Every minute, check if New Outlook is running and restart if not
 loop
 {
-  if (!ProcessExist("olk.exe"))
+  if !ProcessExist("olk.exe")
   {
-    Run("C:\Users\mhmat\AppData\Local\Microsoft\WindowsApps\olk.exe", , "Hide")
+    ; Run Outlook in background (`Options: Hide`)
+    Run outlookPath, , "Hide"
   }
 
   Sleep 60 * 1000
