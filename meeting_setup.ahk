@@ -3,6 +3,9 @@
 ; Set tray icon
 TraySetIcon("settings_suggest.ico")
 
+; Set tray icon tooltip
+A_IconTip := "You're all setup for meetings. 'Right-click → Exit' this script to go back to normal."
+
 ; Prevent more than one concurrent instance of the script running
 #SingleInstance Ignore
 
