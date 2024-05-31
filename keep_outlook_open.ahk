@@ -1,7 +1,7 @@
 ﻿#Requires AutoHotkey v2.0
 
 ; Set tray icon
-TraySetIcon("./icons/mailcheck.ico")
+TraySetIcon("./icons/mark_email_read.ico")
 
 ; Set tray icon tooltip
 A_IconTip := "Keeping Outlook running..."
