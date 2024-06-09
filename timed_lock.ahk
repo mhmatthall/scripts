@@ -3,9 +3,6 @@
 ; Set tray icon
 TraySetIcon("./icons/timer.ico")
 
-; Prevent auto-exit to allow OnExit callback
-Persistent
-
 ; Setup OnExit callback on script exit
 OnExit ExitHandler
 
@@ -21,6 +18,7 @@ if prompt.Result = "Cancel"
     Exit
 }
 
+; Extract user input
 t := prompt.Value
 
 ; Guard: no value entered
@@ -34,8 +32,18 @@ if t = ""
 SessionEndTime := FormatTime(DateAdd(A_Now, t, "minutes"), "Time")
 A_IconTip := "Session ends at " . SessionEndTime
 
-; Start timer for `t` minutes and sleep
-SendDesktopNotification("Locking the screen in " . t . " minutes", (t * 60))
+; Nice formatting for the message
+if t = 1
+{
+    msg := "Locking the screen in 1 minute"
+}
+else
+{
+    msg := "Locking the screen in " . t . " minutes"
+}
+
+; Notify and sleep for `t` minutes
+SendDesktopNotification(msg, (t * 60))
 
 ; On timer completion:
 ; Stop playing media
@@ -50,7 +58,13 @@ DllCall("LockWorkStation")
 ; Callback function which intercepts script exit
 ExitHandler(ExitReason, ExitCode)
 {
-    ; Send desktop notification of script exit
+    ; Guard: only close apps if script is exiting due to user request (i.e. not due to an error or system shutdown)
+    if ExitReason != "Menu"
+    {
+        Return
+    }
+
+    ; Notify script cancelled
     SendDesktopNotification("Timed lock cancelled", 0)
 }
 ; -----------------------------------------------------------------------------
