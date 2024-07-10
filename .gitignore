@@ -1,0 +1,20 @@
+# Ignore compiled AutoHotKey scripts
+*.exe
+
+# Ignore AutoHotKey backup files
+*.bak
+
+# Ignore PowerShell module files
+*.psm1
+
+# Ignore PowerShell module manifest files
+*.psd1
+
+# Ignore PowerShell script output files
+*.txt
+
+# Ignore PowerShell script logs
+*.log
+
+# Ignore Visual Studio Code directory
+.vscode/
