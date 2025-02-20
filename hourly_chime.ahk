@@ -98,11 +98,18 @@ DisableChime(*)
 }
 
 ; -----------------------------------------------------------------------------
-; Calculate the number of milliseconds until the next hour (XX:00:00)
+; Calculate the number of milliseconds until the next hour
 
 CalculateMsUntilNextHour()
 {
-  NextHourTimestamp := A_Year . A_Mon . A_MDay . (A_Hour + 1) . "0000"
+  ; Get the timestamp for the next hour (e.g. 20251231000000)
+  NextHourTimestamp := DateAdd(
+    ; Add 1 hour to the current time
+    DateAdd(A_Now, 1, "Hour"),
+    ; Subtract any minutes and seconds
+    ((A_Min * 60) + A_Sec) * -1,
+    "Seconds"
+  )
 
   return DateDiff(NextHourTimestamp, A_Now, "Seconds") * 1000
 }
